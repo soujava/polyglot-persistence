@@ -15,8 +15,8 @@
 package org.jnosql.polyglot.column;
 
 import org.jnosql.artemis.ConfigurationUnit;
-import org.jnosql.diana.api.key.BucketManager;
-import org.jnosql.diana.api.key.BucketManagerFactory;
+import org.jnosql.diana.api.column.ColumnFamilyManager;
+import org.jnosql.diana.api.column.ColumnFamilyManagerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
@@ -28,11 +28,11 @@ public class ColumnManagerProducer {
     private static final String HEROES = "goods";
 
     @Inject
-    @ConfigurationUnit(name = "key-value")
-    private BucketManagerFactory<BucketManager> bucketManager;
+    @ConfigurationUnit(name = "column")
+    private ColumnFamilyManagerFactory<ColumnFamilyManager> managerFactory;
 
     @Produces
-    public BucketManager getBucketManager() {
-        return bucketManager.getBucketManager(HEROES);
+    public ColumnFamilyManager getManager() {
+        return managerFactory.get(HEROES);
     }
 }

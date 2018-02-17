@@ -12,7 +12,7 @@
   {
     "description": "The Cassandra column configuration",
     "name": "column",
-    "provider": "org.jnosql.diana.arangodb.document.ArangoDBDocumentConfiguration",
+    "provider": "org.jnosql.diana.cassandra.column.CassandraConfiguration",
     "settings": {
       "couchbase-host-1": "localhost",
       "couchbase-user": "root",
