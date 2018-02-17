@@ -28,5 +28,14 @@
       "couchbase-user": "root",
       "couchbase-password": "123456"
     }
+  },
+  {
+    "description": "The Neo4J configuration",
+    "name": "graph",
+    "settings": {
+      "url": "bolt://localhost:7687",
+      "admin": "neo4j",
+      "password": "admin"
+    }
   }
 ]
