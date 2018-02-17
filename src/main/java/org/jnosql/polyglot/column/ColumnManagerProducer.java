@@ -33,6 +33,7 @@ public class ColumnManagerProducer {
     private ColumnFamilyManagerFactory<ColumnFamilyManager> managerFactory;
 
     @Produces
+    @ApplicationScoped
     public ColumnFamilyManager getManager() {
         return managerFactory.get(HEROES);
     }

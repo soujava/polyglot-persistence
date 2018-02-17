@@ -12,11 +12,11 @@
  *
  * Otavio Santana
  */
-package org.jnosql.polyglot.key;
+package org.jnosql.polyglot.document;
 
 import org.jnosql.artemis.ConfigurationUnit;
-import org.jnosql.diana.api.key.BucketManager;
-import org.jnosql.diana.api.key.BucketManagerFactory;
+import org.jnosql.diana.api.document.DocumentCollectionManager;
+import org.jnosql.diana.api.document.DocumentCollectionManagerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Disposes;
@@ -24,22 +24,22 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 @ApplicationScoped
-public class BucketManagerProducer {
+public class DocumentManagerProducer {
 
     private static final String HEROES = "gods";
 
     @Inject
-    @ConfigurationUnit(name = "key-value")
-    private BucketManagerFactory<BucketManager> bucketManager;
+    @ConfigurationUnit(name = "document")
+    private DocumentCollectionManagerFactory<DocumentCollectionManager> managerFactory;
 
     @Produces
     @ApplicationScoped
-    public BucketManager getBucketManager() {
-        return bucketManager.getBucketManager(HEROES);
+    public DocumentCollectionManager getManager() {
+
+        return managerFactory.get(HEROES);
     }
 
-
-    public void close(@Disposes BucketManager bucketManager) {
-        bucketManager.close();
+    public void close(@Disposes DocumentCollectionManager manager) {
+        manager.close();
     }
 }
