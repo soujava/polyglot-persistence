@@ -12,7 +12,7 @@
  *
  * Otavio Santana
  */
-package org.jnosql.polyglot.infrastructure;
+package org.jnosql.polyglot.column;
 
 import org.jnosql.artemis.ConfigurationUnit;
 import org.jnosql.diana.api.key.BucketManager;
@@ -23,7 +23,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 @ApplicationScoped
-public class BucketManagerProducer {
+public class ColumnManagerProducer {
 
     private static final String HEROES = "goods";
 
