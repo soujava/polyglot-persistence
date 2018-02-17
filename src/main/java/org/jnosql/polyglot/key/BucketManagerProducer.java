@@ -25,7 +25,7 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class BucketManagerProducer {
 
-    private static final String HEROES = "goods";
+    private static final String HEROES = "gods";
 
     @Inject
     @ConfigurationUnit(name = "key-value")

@@ -14,6 +14,7 @@
  */
 package org.jnosql.polyglot;
 
+import org.jnosql.artemis.Column;
 import org.jnosql.artemis.Entity;
 import org.jnosql.artemis.Id;
 
@@ -27,8 +28,9 @@ public class God {
     private String id;
 
 
+    @Column
     private String name;
-
+    @Column
     private Set<String> powers;
 
     @Deprecated

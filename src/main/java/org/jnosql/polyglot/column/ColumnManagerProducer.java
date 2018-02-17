@@ -19,13 +19,14 @@ import org.jnosql.diana.api.column.ColumnFamilyManager;
 import org.jnosql.diana.api.column.ColumnFamilyManagerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 @ApplicationScoped
 public class ColumnManagerProducer {
 
-    private static final String HEROES = "goods";
+    private static final String HEROES = "gods";
 
     @Inject
     @ConfigurationUnit(name = "column")
@@ -34,5 +35,9 @@ public class ColumnManagerProducer {
     @Produces
     public ColumnFamilyManager getManager() {
         return managerFactory.get(HEROES);
+    }
+
+    public void close(@Disposes ColumnFamilyManager manager) {
+        manager.close();
     }
 }

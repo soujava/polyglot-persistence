@@ -14,8 +14,9 @@
     "name": "column",
     "provider": "org.jnosql.diana.cassandra.column.CassandraConfiguration",
     "settings": {
-      "couchbase-host-1": "localhost",
-      "couchbase-user": "root",
+      "cassandra-host-1": "localhost",
+      "cassandra-query-1": "CREATE KEYSPACE IF NOT EXISTS gods WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 3};",
+      "cassandra-query-2": "CREATE COLUMNFAMILY IF NOT EXISTS gods.god (\"_id\" text PRIMARY KEY, name text, powers list<text>);",
       "couchbase-password": "123456"
     }
   },
