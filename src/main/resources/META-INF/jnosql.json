@@ -1,0 +1,32 @@
+[
+  {
+    "description": "The redis key-value configuration",
+    "name": "key-value",
+    "provider": "org.jnosql.diana.redis.key.RedisConfiguration",
+    "settings": {
+      "couchbase-host-1": "localhost",
+      "couchbase-user": "root",
+      "couchbase-password": "123456"
+    }
+  },
+  {
+    "description": "The Cassandra column configuration",
+    "name": "column",
+    "provider": "org.jnosql.diana.arangodb.document.ArangoDBDocumentConfiguration",
+    "settings": {
+      "couchbase-host-1": "localhost",
+      "couchbase-user": "root",
+      "couchbase-password": "123456"
+    }
+  },
+  {
+    "description": "The arangodb document configuration",
+    "name": "document",
+    "provider": "org.jnosql.diana.arangodb.document.ArangoDBDocumentConfiguration",
+    "settings": {
+      "couchbase-host-1": "localhost",
+      "couchbase-user": "root",
+      "couchbase-password": "123456"
+    }
+  }
+]
