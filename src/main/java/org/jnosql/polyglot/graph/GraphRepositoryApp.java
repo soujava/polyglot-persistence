@@ -21,7 +21,6 @@ import org.jnosql.polyglot.GodRepository;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.jnosql.polyglot.God.builder;
