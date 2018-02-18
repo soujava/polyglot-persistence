@@ -20,7 +20,6 @@ import org.jnosql.polyglot.God;
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
 import java.time.Duration;
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.jnosql.polyglot.God.builder;
@@ -29,7 +28,7 @@ public class KeyValueTemplateApp {
     public static void main(String[] args) throws InterruptedException {
         try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
             KeyValueTemplate template = container.select(KeyValueTemplate.class).get();
-            God diana = builder().withId("diana").withName("Diana").withPowers(Collections.singleton("hunt")).builder();
+            God diana = builder().withId("diana").withName("Diana").withPower("hunt").builder();
             template.put(diana);
 
             Optional<God> result = template.get("diana", God.class);

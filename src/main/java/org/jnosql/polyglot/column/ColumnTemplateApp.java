@@ -15,18 +15,13 @@
 package org.jnosql.polyglot.column;
 
 import org.jnosql.artemis.column.ColumnTemplate;
-import org.jnosql.artemis.key.KeyValueTemplate;
 import org.jnosql.diana.api.column.ColumnQuery;
-import org.jnosql.diana.api.column.query.ColumnQueryBuilder;
-import org.jnosql.diana.api.document.query.DocumentQueryBuilder;
 import org.jnosql.polyglot.God;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
 import java.time.Duration;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.jnosql.diana.api.column.query.ColumnQueryBuilder.select;
 import static org.jnosql.polyglot.God.builder;
@@ -35,7 +30,7 @@ public class ColumnTemplateApp {
     public static void main(String[] args) throws InterruptedException {
         try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
             ColumnTemplate template = container.select(ColumnTemplate.class).get();
-            God diana = builder().withId("diana").withName("Diana").withPowers(Collections.singleton("hunt")).builder();
+            God diana = builder().withId("diana").withName("Diana").withPower("hunt").builder();
             template.insert(diana);
 
             ColumnQuery query = select().from("god").where("_id").eq("diana").build();

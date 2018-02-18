@@ -19,7 +19,6 @@ import org.jnosql.artemis.Entity;
 import org.jnosql.artemis.Id;
 
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class God {
@@ -29,18 +28,15 @@ public class God {
     @Column
     private String name;
     @Column
-    private Set<String> powers;
-    @Column
     private String power;
 
     @Deprecated
     public God() {
     }
 
-    private God(String id, String name, Set<String> powers, String power) {
+    private God(String id, String name, String power) {
         this.id = id;
         this.name = name;
-        this.powers = powers;
         this.power = power;
     }
 
@@ -53,20 +49,12 @@ public class God {
         return name;
     }
 
-    public Set<String> getPowers() {
-        return powers;
-    }
-
     public void setId(String id) {
         this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setPowers(Set<String> powers) {
-        this.powers = powers;
     }
 
     @Override
@@ -87,7 +75,7 @@ public class God {
         final StringBuilder sb = new StringBuilder("God{");
         sb.append("id='").append(id).append('\'');
         sb.append(", name='").append(name).append('\'');
-        sb.append(", powers=").append(powers);
+        sb.append(", power='").append(power).append('\'');
         sb.append('}');
         return sb.toString();
     }
@@ -101,8 +89,6 @@ public class God {
         private String id;
 
         private String name;
-
-        private Set<String> powers;
 
         private String power;
 
@@ -119,10 +105,6 @@ public class God {
             return this;
         }
 
-        public GodBuilder withPowers(Set<String> powers) {
-            this.powers = powers;
-            return this;
-        }
 
         public GodBuilder withPower(String power) {
             this.power = power;
@@ -130,7 +112,7 @@ public class God {
         }
 
         public God builder() {
-            return new God(id, name, powers, power);
+            return new God(id, name, power);
         }
     }
 }

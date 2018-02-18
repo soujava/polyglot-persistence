@@ -21,7 +21,6 @@ import org.jnosql.polyglot.God;
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
 import java.time.Duration;
-import java.util.Collections;
 import java.util.List;
 
 import static org.jnosql.diana.api.document.query.DocumentQueryBuilder.select;
@@ -31,7 +30,7 @@ public class DocumentTemplateApp {
     public static void main(String[] args) throws InterruptedException {
         try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
             DocumentTemplate template = container.select(DocumentTemplate.class).get();
-            God diana = builder().withId("diana").withName("Diana").withPowers(Collections.singleton("hunt")).builder();
+            God diana = builder().withId("diana").withName("Diana").withPower("hunt").builder();
             template.insert(diana);
 
             DocumentQuery query = select().from("god").where("name").eq("Diana").build();

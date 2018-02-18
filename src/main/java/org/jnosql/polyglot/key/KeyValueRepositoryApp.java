@@ -20,7 +20,6 @@ import org.jnosql.polyglot.GodRepository;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.jnosql.polyglot.God.builder;
@@ -30,7 +29,7 @@ public class KeyValueRepositoryApp {
         try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
 
             GodRepository repository = container.select(GodRepository.class, DatabaseQualifier.ofKeyValue()).get();
-            God diana = builder().withId("diana").withName("Diana").withPowers(Collections.singleton("hunt")).builder();
+            God diana = builder().withId("diana").withName("Diana").withPower("hunt").builder();
             repository.save(diana);
 
             Optional<God> result = repository.findById("diana");
