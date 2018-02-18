@@ -16,5 +16,10 @@ package org.jnosql.polyglot;
 
 import org.jnosql.artemis.Repository;
 
+import java.util.Optional;
+
 public interface GodRepository extends Repository<God, String> {
+
+
+    Optional<God> findByName(String name);
 }

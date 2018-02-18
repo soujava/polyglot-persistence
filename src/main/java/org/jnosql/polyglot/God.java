@@ -26,21 +26,22 @@ public class God {
 
     @Id
     private String id;
-
-
     @Column
     private String name;
     @Column
     private Set<String> powers;
+    @Column
+    private String power;
 
     @Deprecated
     public God() {
     }
 
-    private God(String id, String name, Set<String> powers) {
+    private God(String id, String name, Set<String> powers, String power) {
         this.id = id;
         this.name = name;
         this.powers = powers;
+        this.power = power;
     }
 
 
@@ -103,6 +104,8 @@ public class God {
 
         private Set<String> powers;
 
+        private String power;
+
         private GodBuilder() {
         }
 
@@ -121,8 +124,13 @@ public class God {
             return this;
         }
 
+        public GodBuilder withPower(String power) {
+            this.power = power;
+            return this;
+        }
+
         public God builder() {
-            return new God(id, name, powers);
+            return new God(id, name, powers, power);
         }
     }
 }

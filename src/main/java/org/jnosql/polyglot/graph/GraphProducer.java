@@ -33,7 +33,7 @@ class GraphProducer {
     private Neo4JGraph graph;
 
     @Inject
-    @ConfigurationUnit
+    @ConfigurationUnit(name = "graph")
     private Driver driver;
 
 

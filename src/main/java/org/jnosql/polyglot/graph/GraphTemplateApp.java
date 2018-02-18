@@ -14,12 +14,12 @@
  */
 package org.jnosql.polyglot.graph;
 
+import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.jnosql.artemis.graph.GraphTemplate;
 import org.jnosql.polyglot.God;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.jnosql.polyglot.God.builder;
@@ -28,9 +28,11 @@ public class GraphTemplateApp {
     public static void main(String[] args)  {
         try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
             GraphTemplate template = container.select(GraphTemplate.class).get();
-            God diana = builder().withId("diana").withName("Diana").withPowers(Collections.singleton("hunt")).builder();
-            template.insert(diana);
+            Graph graph = container.select(Graph.class).get();
 
+            God diana = builder().withId("diana").withName("Diana").withPower("hunt").builder();
+            template.insert(diana);
+            graph.tx().commit();
             Optional<God> result = template.getTraversalVertex().hasLabel(God.class).has("name", "Diana").next();
 
             result.ifPresent(System.out::println);

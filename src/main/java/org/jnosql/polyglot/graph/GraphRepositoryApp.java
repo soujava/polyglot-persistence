@@ -14,6 +14,7 @@
  */
 package org.jnosql.polyglot.graph;
 
+import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.jnosql.artemis.DatabaseQualifier;
 import org.jnosql.polyglot.God;
 import org.jnosql.polyglot.GodRepository;
@@ -26,14 +27,16 @@ import java.util.Optional;
 import static org.jnosql.polyglot.God.builder;
 
 public class GraphRepositoryApp {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
 
             GodRepository repository = container.select(GodRepository.class, DatabaseQualifier.ofGraph()).get();
-            God diana = builder().withId("diana").withName("Diana").withPowers(Collections.singleton("hunt")).builder();
-            repository.save(diana);
+            Graph graph = container.select(Graph.class).get();
 
-            Optional<God> result = repository.findById("diana");
+            God diana = builder().withName("Diana").withPower("hunt").builder();
+            repository.save(diana);
+            graph.tx().commit();
+            Optional<God> result = repository.findByName("Diana");
             result.ifPresent(System.out::println);
 
 
