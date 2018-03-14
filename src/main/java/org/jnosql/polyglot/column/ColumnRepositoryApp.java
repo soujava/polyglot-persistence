@@ -25,7 +25,7 @@ import java.util.Optional;
 import static org.jnosql.polyglot.God.builder;
 
 public class ColumnRepositoryApp {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)  {
         try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
 
             GodRepository repository = container.select(GodRepository.class, DatabaseQualifier.ofColumn()).get();
