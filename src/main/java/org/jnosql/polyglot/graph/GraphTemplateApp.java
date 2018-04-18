@@ -30,7 +30,7 @@ public class GraphTemplateApp {
             GraphTemplate template = container.select(GraphTemplate.class).get();
             Graph graph = container.select(Graph.class).get();
 
-            God diana = builder().withId("diana").withName("Diana").withPower("hunt").builder();
+            God diana = builder().withName("Diana").withPower("hunt").builder();
             template.insert(diana);
             graph.tx().commit();
             Optional<God> result = template.getTraversalVertex().hasLabel(God.class).has("name", "Diana").next();
