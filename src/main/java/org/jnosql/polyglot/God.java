@@ -57,6 +57,14 @@ public class God {
         this.name = name;
     }
 
+    public String getPower() {
+        return power;
+    }
+
+    public void setPower(String power) {
+        this.power = power;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
