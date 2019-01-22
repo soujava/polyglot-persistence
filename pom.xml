@@ -13,9 +13,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <json.b.version>1.0</json.b.version>
-        <javax.json.version>1.1</javax.json.version>
-        <artemis.vesion>0.0.5</artemis.vesion>
-        <tinkerpop.version>3.3.1</tinkerpop.version>
+        <javax.json.version>1.1.4</javax.json.version>
+        <artemis.vesion>0.0.7</artemis.vesion>
+        <tinkerpop.version>3.4.0</tinkerpop.version>
     </properties>
 
 
@@ -24,7 +24,7 @@
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-shaded</artifactId>
-            <version>3.0.3.Final</version>
+            <version>3.1.0.Beta1</version>
         </dependency>
         <dependency>
             <groupId>javax.json</groupId>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>org.eclipse</groupId>
             <artifactId>yasson</artifactId>
-            <version>${json.b.version}</version>
+            <version>1.0.3</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish</groupId>
@@ -70,7 +70,7 @@
         </dependency>
         <dependency>
             <groupId>org.jnosql.artemis</groupId>
-            <artifactId>graph-extension</artifactId>
+            <artifactId>artemis-graph</artifactId>
             <version>${artemis.vesion}</version>
         </dependency>
 
@@ -101,12 +101,12 @@
         <dependency>
             <groupId>com.steelbridgelabs.oss</groupId>
             <artifactId>neo4j-gremlin-bolt</artifactId>
-            <version>0.2.27</version>
+            <version>0.3.1</version>
         </dependency>
         <dependency>
             <groupId>org.neo4j.driver</groupId>
             <artifactId>neo4j-java-driver</artifactId>
-            <version>1.5.1</version>
+            <version>1.7.2</version>
         </dependency>
     </dependencies>
 
