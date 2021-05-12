@@ -37,5 +37,13 @@
       "admin": "neo4j",
       "password": "admin"
     }
+  },
+  {
+    "description": "The elasticsearch document configuration",
+    "name": "document",
+    "provider": "org.jnosql.diana.elasticsearch.document.ElasticsearchDocumentConfiguration",
+    "settings": {
+      "elasticsearch-host-1": "localhost:9200"
+    }
   }
 ]
