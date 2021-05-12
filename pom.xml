@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <json.b.version>1.0</json.b.version>
         <javax.json.version>1.1.4</javax.json.version>
-        <artemis.vesion>0.0.7</artemis.vesion>
+        <artemis.vesion>0.0.9</artemis.vesion>
         <tinkerpop.version>3.4.0</tinkerpop.version>
     </properties>
 
@@ -84,6 +84,11 @@
         <dependency>
             <groupId>org.jnosql.diana</groupId>
             <artifactId>cassandra-driver</artifactId>
+            <version>${artemis.vesion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jnosql.diana</groupId>
+            <artifactId>elasticsearch-driver</artifactId>
             <version>${artemis.vesion}</version>
         </dependency>
         <dependency>

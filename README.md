@@ -60,6 +60,26 @@
 1. create an index running the query `CREATE PRIMARY INDEX index_gods on gods;`
 1. Follow the instructions: https://developer.couchbase.com/documentation/server/current/fts/full-text-intro.html to create a index-gods full text index
 
+#
+
+![Elasticsearch Project](https://static-www.elastic.co/v3/assets/bltefdd0b53724fa2ce/blt5ebe80fb665aef6b/5ea8c8f26b62d4563b6ecec2/brand-elasticsearch-220x130.svg)
+
+
+**Elasticsearch**:Elasticsearch is also a NoSQL document type, so a developer may model the application as such.
+
+
+### How To Install
+
+![Docker](https://www.docker.com/sites/default/files/horizontal_large.png)
+
+
+1. Install docker: https://www.docker.com/
+1. https://hub.docker.com/_/elasticsearch
+1. Run docker command
+1. `docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.12.1`
+1. Follow the instructions: https://hub.docker.com/_/elasticsearch
+1. Run DocumentRepositoryApp class
+
 ## Graph
 
 ![Neo4J Project](http://www.jnosql.org/img/logos/neo4j.png)
