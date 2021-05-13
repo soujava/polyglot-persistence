@@ -62,7 +62,7 @@
 
 #
 
-![Elasticsearch Project](https://static-www.elastic.co/v3/assets/bltefdd0b53724fa2ce/blt5ebe80fb665aef6b/5ea8c8f26b62d4563b6ecec2/brand-elasticsearch-220x130.svg)
+![Elasticsearch Project](https://www.jnosql.org/img/logos/elastic.svg)
 
 
 **Elasticsearch**:Elasticsearch is also a NoSQL document type, so a developer may model the application as such.
