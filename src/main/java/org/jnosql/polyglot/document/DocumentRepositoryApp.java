@@ -10,32 +10,39 @@
  *
  * Contributors:
  *
- * Otavio Santana
+ * Otavio Santana (@otaviojava)
+ * Carlos Santos (@carlosepdsJava)
  */
+
 package org.jnosql.polyglot.document;
 
-import org.jnosql.artemis.DatabaseQualifier;
+
+import org.eclipse.jnosql.mapping.DatabaseQualifier;
 import org.jnosql.polyglot.God;
 import org.jnosql.polyglot.GodRepository;
-
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
 import java.util.Optional;
 
-import static org.jnosql.polyglot.God.builder;
-
 public class DocumentRepositoryApp {
     public static void main(String[] args) throws InterruptedException {
-        try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
 
-            GodRepository repository = container.select(GodRepository.class, DatabaseQualifier.ofDocument()).get();
-            God diana = builder().withId("diana").withName("Diana").withPower("hunt").builder();
+        try (SeContainer container = SeContainerInitializer
+                .newInstance().initialize()) {
+
+            God diana = new God(1L, "Diana", "Hunt");
+
+            GodRepository repository =
+                    container.select(GodRepository.class, DatabaseQualifier.ofDocument())
+                            .get();
             repository.save(diana);
 
-            Optional<God> result = repository.findById("diana");
-            result.ifPresent(System.out::println);
+            Optional<God> god = repository.findById(1L);
+            System.out.println("Query by id : " + god);
+            System.out.println("Query by Name : " + repository.findByName("Diana"));
 
-
+            repository.deleteById(1L);
         }
+        System.exit(0);
     }
 }

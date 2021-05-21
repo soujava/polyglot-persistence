@@ -10,33 +10,45 @@
  *
  * Contributors:
  *
- * Otavio Santana
+ * Otavio Santana (@otaviojava)
+ * Carlos Santos (@carlosepdsJava)
  */
+
 package org.jnosql.polyglot.graph;
 
-import org.apache.tinkerpop.gremlin.structure.Graph;
-import org.jnosql.artemis.graph.GraphTemplate;
-import org.jnosql.polyglot.God;
 
+import org.eclipse.jnosql.mapping.graph.GraphTemplate;
+import org.jnosql.polyglot.God;
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
 import java.util.Optional;
 
-import static org.jnosql.polyglot.God.builder;
-
 public class GraphTemplateApp {
     public static void main(String[] args)  {
-        try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
-            GraphTemplate template = container.select(GraphTemplate.class).get();
-            Graph graph = container.select(Graph.class).get();
 
-            God diana = builder().withName("Diana").withPower("hunt").builder();
-            template.insert(diana);
-            graph.tx().commit();
-            Optional<God> result = template.getTraversalVertex().hasLabel(God.class).has("name", "Diana").next();
+        try (SeContainer container = SeContainerInitializer
+                .newInstance().initialize()) {
 
-            result.ifPresent(System.out::println);
+            GraphTemplate template =
+                    container.select(GraphTemplate.class)
+                            .get();
 
+            God diana = template.getTraversalVertex()
+                    .hasLabel(God.class)
+                    .has("name", "Diana")
+                    .<God>next()
+                    .orElseGet(() ->
+                            template.insert(new God(null, "Diana", "Hunt")));
+
+            System.out.println("query : " + diana);
+
+            template.delete(diana.getId());
+
+            Optional<God> god = template.getTraversalVertex(diana.getId()).next();
+
+            System.out.println("Query: " + god);
         }
+        System.exit(0);
     }
 }
+

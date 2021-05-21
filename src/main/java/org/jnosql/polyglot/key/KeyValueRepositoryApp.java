@@ -10,32 +10,39 @@
  *
  * Contributors:
  *
- * Otavio Santana
+ * Otavio Santana (@otaviojava)
+ * Carlos Santos (@carlosepdsJava)
  */
+
 package org.jnosql.polyglot.key;
 
-import org.jnosql.artemis.DatabaseQualifier;
-import org.jnosql.polyglot.God;
-import org.jnosql.polyglot.GodRepository;
 
+import jakarta.nosql.mapping.keyvalue.KeyValueTemplate;
+import org.jnosql.polyglot.God;
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
 import java.util.Optional;
 
-import static org.jnosql.polyglot.God.builder;
-
 public class KeyValueRepositoryApp {
     public static void main(String[] args) throws InterruptedException {
-        try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
 
-            GodRepository repository = container.select(GodRepository.class, DatabaseQualifier.ofKeyValue()).get();
-            God diana = builder().withId("diana").withName("Diana").withPower("hunt").builder();
-            repository.save(diana);
+        try (SeContainer container = SeContainerInitializer
+                .newInstance().initialize()) {
 
-            Optional<God> result = repository.findById("diana");
-            result.ifPresent(System.out::println);
+            God diana = new God(1L, "Diana", "Hunt");
 
+            KeyValueTemplate template =
+                    container.select(KeyValueTemplate.class)
+                            .get();
+            template.put(diana);
 
+            final Optional<God> god = template.get(1L, God.class);
+            System.out.println("query : " + god);
+            template.delete(1L);
+
+            System.out.println("query again: " +
+                    template.get(1L, God.class));
         }
+        System.exit(0);
     }
 }

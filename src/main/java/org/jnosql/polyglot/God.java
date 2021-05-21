@@ -10,117 +10,48 @@
  *
  * Contributors:
  *
- * Otavio Santana
+ * Otavio Santana (@otaviojava)
+ * Carlos Santos (@carlosepdsJava)
  */
+
 package org.jnosql.polyglot;
 
-import org.jnosql.artemis.Column;
-import org.jnosql.artemis.Entity;
-import org.jnosql.artemis.Id;
 
-import java.util.Objects;
+import jakarta.nosql.mapping.Column;
+import jakarta.nosql.mapping.Entity;
+import jakarta.nosql.mapping.Id;
 
 @Entity
 public class God {
 
     @Id
-    private String id;
+    private Long id;
+
     @Column
     private String name;
+
     @Column
     private String power;
 
-    @Deprecated
+    public God(Long id, String name, String power) {
+        this.id = id;
+        this.name = name;
+        this.power = power;
+    }
+
     public God() {
     }
 
-    private God(String id, String name, String power) {
-        this.id = id;
-        this.name = name;
-        this.power = power;
-    }
-
-
-    public String getId() {
+    public Long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPower() {
-        return power;
-    }
-
-    public void setPower(String power) {
-        this.power = power;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof God)) return false;
-        God god = (God) o;
-        return Objects.equals(id, god.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("God{");
-        sb.append("id='").append(id).append('\'');
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", power='").append(power).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
-
-    public static GodBuilder builder() {
-        return new GodBuilder();
-    }
-
-    public static class GodBuilder {
-
-        private String id;
-
-        private String name;
-
-        private String power;
-
-        private GodBuilder() {
-        }
-
-        public GodBuilder withId(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public GodBuilder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-
-        public GodBuilder withPower(String power) {
-            this.power = power;
-            return this;
-        }
-
-        public God builder() {
-            return new God(id, name, power);
-        }
+        return "God{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", power=" + power +
+                '}';
     }
 }

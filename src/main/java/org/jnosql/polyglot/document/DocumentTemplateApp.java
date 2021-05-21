@@ -10,38 +10,44 @@
  *
  * Contributors:
  *
- * Otavio Santana
+ * Otavio Santana (@otaviojava)
+ * Carlos Santos (@carlosepdsJava)
  */
+
 package org.jnosql.polyglot.document;
 
-import org.jnosql.artemis.document.DocumentTemplate;
-import org.jnosql.diana.api.document.DocumentQuery;
-import org.jnosql.polyglot.God;
 
+import jakarta.nosql.mapping.PreparedStatement;
+import jakarta.nosql.mapping.document.DocumentTemplate;
+import org.jnosql.polyglot.God;
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
-import java.time.Duration;
-import java.util.List;
-
-import static org.jnosql.diana.api.document.query.DocumentQueryBuilder.select;
-import static org.jnosql.polyglot.God.builder;
+import java.util.Optional;
 
 public class DocumentTemplateApp {
-    public static void main(String[] args) throws InterruptedException {
-        try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
-            DocumentTemplate template = container.select(DocumentTemplate.class).get();
-            God diana = builder().withId("diana").withName("Diana").withPower("hunt").builder();
+    public static void main(String[] args) {
+
+        try (SeContainer container = SeContainerInitializer
+                .newInstance().initialize()) {
+
+            God diana = new God(1L, "Diana", "Hunt");
+
+            DocumentTemplate template =  container.select(DocumentTemplate.class)
+                    .get();
             template.insert(diana);
 
-            DocumentQuery query = select().from("god").where("name").eq("Diana").build();
+            Optional<God> god = template.singleResult("select * from God where _id = 1");
+            System.out.println("Plain query text : " + god);
 
-            List<God> result = template.select(query);
-            result.forEach(System.out::println);
+            PreparedStatement prepare = template.prepare("select * from God where _id = @id");
+            prepare.bind("id", 1L);
 
-            template.insert(diana, Duration.ofSeconds(1));
-            Thread.sleep(2_000L);
-            System.out.println(template.select(query));
+            System.out.println("Query by prepare query" + prepare.getSingleResult());
 
+            template.query("delete from God where _id = 1");
+
+            System.out.println("query : " + template.find(God.class, 1L));
         }
+        System.exit(0);
     }
 }

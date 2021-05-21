@@ -10,36 +10,32 @@
  *
  * Contributors:
  *
- * Otavio Santana
+ * Otavio Santana (@otaviojava)
+ * Carlos Santos (@carlosepdsJava)
  */
+
 package org.jnosql.polyglot.key;
 
-import org.jnosql.artemis.ConfigurationUnit;
-import org.jnosql.diana.api.key.BucketManager;
-import org.jnosql.diana.api.key.BucketManagerFactory;
-
+import jakarta.nosql.keyvalue.BucketManager;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 @ApplicationScoped
-public class BucketManagerProducer {
-
-    private static final String HEROES = "gods";
+class BucketManagerProducer {
 
     @Inject
-    @ConfigurationUnit(name = "key-value")
-    private BucketManagerFactory<BucketManager> bucketManager;
+    @ConfigProperty(name = "keyvalue") //switch to NoSQL that is configured in microprofile-config.properties
+    private BucketManager manager;
 
     @Produces
-    @ApplicationScoped
-    public BucketManager getBucketManager() {
-        return bucketManager.getBucketManager(HEROES);
+    public BucketManager getManager() {
+        return manager;
     }
 
-
-    public void close(@Disposes BucketManager bucketManager) {
-        bucketManager.close();
+    public void destroy(@Disposes BucketManager manager) {
+        manager.close();
     }
 }

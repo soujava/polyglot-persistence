@@ -10,40 +10,26 @@
  *
  * Contributors:
  *
- * Otavio Santana
+ * Otavio Santana (@otaviojava)
+ * Carlos Santos (@carlosepdsJava)
  */
+
 package org.jnosql.polyglot.graph;
 
-import com.steelbridgelabs.oss.neo4j.structure.Neo4JElementIdProvider;
-import com.steelbridgelabs.oss.neo4j.structure.Neo4JGraph;
-import com.steelbridgelabs.oss.neo4j.structure.providers.Neo4JNativeElementIdProvider;
-import org.apache.tinkerpop.gremlin.structure.Graph;
-import org.jnosql.artemis.ConfigurationUnit;
-import org.neo4j.driver.v1.Driver;
 
-import javax.annotation.PostConstruct;
+import org.apache.tinkerpop.gremlin.structure.Graph;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
+@ApplicationScoped
 class GraphProducer {
 
-
-    private Neo4JGraph graph;
-
     @Inject
-    @ConfigurationUnit(name = "graph")
-    private Driver driver;
-
-
-    @PostConstruct
-    public void init() {
-        Neo4JElementIdProvider<?> vertexIdProvider = new Neo4JNativeElementIdProvider();
-        Neo4JElementIdProvider<?> edgeIdProvider = new Neo4JNativeElementIdProvider();
-        this.graph = new Neo4JGraph(driver, vertexIdProvider, edgeIdProvider);
-        graph.setProfilerEnabled(true);
-    }
+    @ConfigProperty(name = "graph") //switch to NoSQL that is configured in microprofile-config.properties
+    private Graph graph;
 
     @Produces
     @ApplicationScoped
@@ -51,8 +37,7 @@ class GraphProducer {
         return graph;
     }
 
-    public void close(@Disposes Graph graph) throws Exception {
+    public void destroy(@Disposes Graph graph) throws Exception {
         graph.close();
-        driver.close();
     }
 }

@@ -1,4 +1,4 @@
-![Eclipse JNoSQL Artemis Project](https://github.com/JNOSQL/diana-site/blob/master/images/duke-artemis.png)
+![Eclipse JNoSQL Project](https://github.com/JNOSQL/diana-site/blob/master/images/duke-artemis.png)
 # Four databases types and an unique API that is the whole concept of Eclipse NoSQL
 
 ## Key-value
@@ -80,6 +80,26 @@
 1. Follow the instructions: https://hub.docker.com/_/elasticsearch
 1. Run DocumentRepositoryApp class
 
+#
+
+![MongoDB Project](https://www.jnosql.org/img/logos/mongodb.png)
+
+
+**MongoDB**:MongoDB is a general purpose, document-based, distributed database built for modern application developers and for the cloud era.
+
+
+### How To Install
+
+![Docker](https://www.docker.com/sites/default/files/horizontal_large.png)
+
+
+1. Install docker: https://www.docker.com/
+1. https://hub.docker.com/_/mongo
+1. Run docker command
+1. `docker run -d --name MongoDB -p 27017:27017 mongo:latest`
+1. Follow the instructions: https://hub.docker.com/_/mongo
+1. Run DocumentRepositoryApp class
+
 ## Graph
 
 ![Neo4J Project](http://www.jnosql.org/img/logos/neo4j.png)
@@ -97,4 +117,28 @@ Neo4j is a graph database management system developed by  Neo4j, Inc. Described 
 1. `docker run --publish=7474:7474 --publish=7687:7687 --volume=$HOME/neo4j/data:/data neo4j`
 
 
-Check the database configuration  such as user and password at jnosql.json at **src/main/resources/jnosql.json**
+Check the database configuration  such as user and password at microprofile-config.properties at **src/main/resources/microprofile-config.properties**
+
+###  Dependencies
+
+Do not change the dependencies(pom.xml) due to the currently undefined (5/2021) of the names of the javax packages to jakarta:
+
+`<groupId>org.jboss.weld.se</groupId>`
+
+`<artifactId>weld-se-shaded</artifactId>`
+
+`<groupId>org.eclipse</groupId>`
+
+`<artifactId>yasson</artifactId>`
+
+**microprofile-config.properties:**
+
+`keyvalue.provider=org.eclipse.jnosql.communication.redis.keyvalue.RedisConfiguration`
+
+`column.provider=org.eclipse.jnosql.communication.cassandra.column.CassandraConfiguration`
+
+`document.provider=org.eclipse.jnosql.communication.mongodb.document.MongoDBDocumentConfiguration`
+
+`document.provider=org.eclipse.jnosql.communication.couchbase.document.CouchbaseDocumentConfiguration`
+
+`document.provider=org.eclipse.jnosql.communication.elasticsearch.document.ElasticsearchDocumentConfiguration`

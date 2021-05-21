@@ -10,14 +10,15 @@
  *
  * Contributors:
  *
- * Otavio Santana
+ * Otavio Santana (@otaviojava)
+ * Carlos Santos (@carlosepdsJava)
  */
+
 package org.jnosql.polyglot.document;
 
-import org.jnosql.artemis.ConfigurationUnit;
-import org.jnosql.diana.api.document.DocumentCollectionManager;
-import org.jnosql.diana.api.document.DocumentCollectionManagerFactory;
 
+import jakarta.nosql.document.DocumentCollectionManager;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
@@ -26,20 +27,16 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class DocumentManagerProducer {
 
-    private static final String HEROES = "gods";
-
     @Inject
-    @ConfigurationUnit(name = "document")
-    private DocumentCollectionManagerFactory<DocumentCollectionManager> managerFactory;
+    @ConfigProperty(name = "document") //switch to NoSQL that is configured in microprofile-config.properties
+    private DocumentCollectionManager manager;
 
     @Produces
-    @ApplicationScoped
     public DocumentCollectionManager getManager() {
-
-        return managerFactory.get(HEROES);
+        return manager;
     }
 
-    public void close(@Disposes DocumentCollectionManager manager) {
+    public void destroy(@Disposes DocumentCollectionManager manager) {
         manager.close();
     }
 }
