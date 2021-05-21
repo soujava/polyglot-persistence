@@ -1,5 +1,5 @@
 ![Eclipse JNoSQL Project](https://github.com/JNOSQL/diana-site/blob/master/images/duke-artemis.png)
-# Four databases types and an unique API that is the whole concept of Eclipse NoSQL
+# Six databases types and an unique API that is the whole concept of Eclipse NoSQL
 
 ## Key-value
 
