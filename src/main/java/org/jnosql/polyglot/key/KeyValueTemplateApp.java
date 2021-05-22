@@ -10,34 +10,41 @@
  *
  * Contributors:
  *
- * Otavio Santana
+ * Otavio Santana (@otaviojava)
+ * Carlos Santos (@carlosepdsJava)
  */
+
 package org.jnosql.polyglot.key;
 
-import org.jnosql.artemis.key.KeyValueTemplate;
-import org.jnosql.polyglot.God;
 
+import jakarta.nosql.mapping.keyvalue.KeyValueTemplate;
+import org.jnosql.polyglot.God;
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
 import java.time.Duration;
 import java.util.Optional;
-
-import static org.jnosql.polyglot.God.builder;
+import java.util.concurrent.TimeUnit;
 
 public class KeyValueTemplateApp {
     public static void main(String[] args) throws InterruptedException {
-        try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
-            KeyValueTemplate template = container.select(KeyValueTemplate.class).get();
-            God diana = builder().withId("diana").withName("Diana").withPower("hunt").builder();
-            template.put(diana);
 
-            Optional<God> result = template.get("diana", God.class);
-            result.ifPresent(System.out::println);
+        try (SeContainer container = SeContainerInitializer
+                .newInstance().initialize()) {
 
-            template.put(diana, Duration.ofSeconds(1));
-            Thread.sleep(2_000L);
-            System.out.println(template.get("diana", God.class));
+            God diana = new God(1L, "Diana", "Hunt");
 
+            KeyValueTemplate template =
+                    container.select(KeyValueTemplate.class)
+                            .get();
+
+            template.put(diana, Duration.ofSeconds(1L));
+
+            final Optional<God> god = template.get(1L, God.class);
+            System.out.println("query : " + god);
+            TimeUnit.SECONDS.sleep(2L);
+            System.out.println("query again: " +
+                    template.get(1L, God.class));
         }
+        System.exit(0);
     }
 }

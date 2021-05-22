@@ -10,38 +10,41 @@
  *
  * Contributors:
  *
- * Otavio Santana
+ * Otavio Santana (@otaviojava)
+ * Carlos Santos (@carlosepdsJava)
  */
+
 package org.jnosql.polyglot.column;
 
-import org.jnosql.artemis.column.ColumnTemplate;
-import org.jnosql.diana.api.column.ColumnQuery;
-import org.jnosql.polyglot.God;
 
+import jakarta.nosql.mapping.column.ColumnTemplate;
+import org.jnosql.polyglot.God;
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
 import java.time.Duration;
-import java.util.List;
-
-import static org.jnosql.diana.api.column.query.ColumnQueryBuilder.select;
-import static org.jnosql.polyglot.God.builder;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public class ColumnTemplateApp {
     public static void main(String[] args) throws InterruptedException {
-        try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
-            ColumnTemplate template = container.select(ColumnTemplate.class).get();
-            God diana = builder().withId("diana").withName("Diana").withPower("hunt").builder();
-            template.insert(diana);
 
-            ColumnQuery query = select().from("god").where("_id").eq("diana").build();
+        try (SeContainer container = SeContainerInitializer
+                .newInstance().initialize()) {
 
-            List<God> result = template.select(query);
-            result.forEach(System.out::println);
+            God diana = new God(1L, "Diana", "Hunt");
 
-            template.insert(diana, Duration.ofSeconds(1));
-            Thread.sleep(2_000L);
-            System.out.println(template.select(query));
+            ColumnTemplate template =
+                    container.select(ColumnTemplate.class)
+                            .get();
+            template.insert(diana, Duration.ofSeconds(1L));
 
+            final Optional<God> god = template.find(God.class, 1L);
+            System.out.println("query : " + god);
+            TimeUnit.SECONDS.sleep(2L);
+
+            System.out.println("query again: " +
+                    template.find(God.class, 1L));
         }
+        System.exit(0);
     }
 }

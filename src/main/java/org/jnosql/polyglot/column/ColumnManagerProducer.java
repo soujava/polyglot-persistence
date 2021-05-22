@@ -10,14 +10,15 @@
  *
  * Contributors:
  *
- * Otavio Santana
+ * Otavio Santana (@otaviojava)
+ * Carlos Santos (@carlosepdsJava)
  */
+
 package org.jnosql.polyglot.column;
 
-import org.jnosql.artemis.ConfigurationUnit;
-import org.jnosql.diana.api.column.ColumnFamilyManager;
-import org.jnosql.diana.api.column.ColumnFamilyManagerFactory;
 
+import jakarta.nosql.column.ColumnFamilyManager;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
@@ -26,19 +27,16 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class ColumnManagerProducer {
 
-    private static final String HEROES = "gods";
-
     @Inject
-    @ConfigurationUnit(name = "column")
-    private ColumnFamilyManagerFactory<ColumnFamilyManager> managerFactory;
+    @ConfigProperty(defaultValue = "column") //switch to NoSQL that is configured in microprofile-config.properties
+    private ColumnFamilyManager manager;
 
     @Produces
-    @ApplicationScoped
-    public ColumnFamilyManager getManager() {
-        return managerFactory.get(HEROES);
+    public ColumnFamilyManager getManagerCassandra() {
+        return manager;
     }
 
-    public void close(@Disposes ColumnFamilyManager manager) {
+    public void destroy(@Disposes ColumnFamilyManager manager) {
         manager.close();
     }
 }

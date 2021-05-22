@@ -10,35 +10,57 @@
  *
  * Contributors:
  *
- * Otavio Santana
+ * Otavio Santana (@otaviojava)
+ * Carlos Santos (@carlosepdsJava)
  */
 package org.jnosql.polyglot.graph;
 
-import org.apache.tinkerpop.gremlin.structure.Graph;
-import org.jnosql.artemis.DatabaseQualifier;
-import org.jnosql.polyglot.God;
-import org.jnosql.polyglot.GodRepository;
 
+import org.eclipse.jnosql.mapping.graph.GraphTemplate;
+import org.jnosql.polyglot.God;
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
-import java.util.Optional;
-
-import static org.jnosql.polyglot.God.builder;
 
 public class GraphRepositoryApp {
     public static void main(String[] args) {
-        try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
 
-            GodRepository repository = container.select(GodRepository.class, DatabaseQualifier.ofGraph()).get();
-            Graph graph = container.select(Graph.class).get();
+        try (SeContainer container = SeContainerInitializer
+                .newInstance().initialize()) {
 
-            God diana = builder().withName("Diana").withPower("hunt").builder();
-            repository.save(diana);
-            graph.tx().commit();
-            Optional<God> result = repository.findByName("Diana");
-            result.ifPresent(System.out::println);
+            GraphTemplate template =
+                    container.select(GraphTemplate.class)
+                            .get();
 
+            God diana = template.getTraversalVertex()
+                    .hasLabel(God.class)
+                    .has("name", "Diana")
+                    .<God>next()
+                    .orElseGet(() ->
+                            template.insert(new God(null, "Diana", "Hunt")));
 
+            God apollo = template.getTraversalVertex()
+                    .hasLabel(God.class)
+                    .has("name", "Apollo")
+                    .<God>next()
+                    .orElseGet(() ->
+                            template.insert(new God(null, "Apollo", "Sun")));
+
+            God zeus = template.getTraversalVertex()
+                    .hasLabel(God.class)
+                    .has("name", "Zeus")
+                    .<God>next()
+                    .orElseGet(() ->
+                            template.insert(new God(null, "Zeus", "Thunder")));
+
+            template.edge(diana, "brother", apollo);
+            template.edge(apollo, "brother", diana);
+            template.edge(zeus, "father", apollo);
+            template.edge(zeus, "father", diana);
+
+            template.delete(diana.getId());
+            template.delete(zeus.getId());
+            template.delete(apollo.getId());
         }
+        System.exit(0);
     }
 }
